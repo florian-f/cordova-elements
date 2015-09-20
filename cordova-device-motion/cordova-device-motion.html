@@ -1,0 +1,46 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../cordova-base/cordova-base.html">
+
+<script>
+(function() {
+  Polymer({
+    is: 'cordova-device-motion',
+
+    properties: {
+      x: {
+        type: String,
+        notify: true
+      },
+      y: {
+        type: String,
+        notify: true
+      },
+      z: {
+        type: String,
+        notify: true
+      },
+      frequency: {
+        type: Number,
+        value: 1000,
+        notify: true
+      }
+    },
+    handleDeviceReady: function() { 
+      function onSuccess(acceleration) {
+        this.x=acceleration.x;
+        this.y=acceleration.y;
+        this.z=acceleration.z;
+      }
+      function onError() {
+        console.log('onError!');
+      }
+      var options = { frequency: this.frequency };
+      navigator.accelerometer.watchAcceleration(onSuccess.bind(this), onError, options);
+    },
+
+    ready: function() {
+        document.addEventListener('deviceReady', this.handleDeviceReady.bind(this), false);
+    }
+  });
+})();
+</script>

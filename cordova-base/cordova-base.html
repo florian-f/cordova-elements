@@ -1,0 +1,44 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="cordova.html">
+
+<script>
+(function() {
+  Polymer({
+    is: 'cordova-base',
+
+    properties: {
+      cordovaReady: {
+        type: Boolean,
+        value: false,
+        notify: true,
+      },
+      version: {
+        type: String,
+        value: 'unknown',
+        notify: true,
+      },
+      platformId: {
+        type: String,
+        value: 'unknown',
+        notify: true,
+      },
+      platformVersion: {
+        type: String,
+        value: 'unknown',
+        notify: true,
+      }
+    },
+
+    handleDeviceReady: function() {
+      this.cordovaReady = true;
+      this.version = window.cordova.version;
+      this.platformId = window.cordova.platformId;
+      this.platformVersion = window.cordova.platformVersion;
+    },
+
+    ready: function() {
+      document.addEventListener('deviceReady', this.handleDeviceReady.bind(this), true);
+    }
+  });
+})();
+</script>
